@@ -28,7 +28,7 @@ public class MyFrame extends JFrame {
     }
 
     private void initGUI() {
-        SwingUtilities.invokeLater(()->{
+        SwingUtilities.invokeLater(() -> {
             GridBagConstraints c = new GridBagConstraints();
             c.insets = new Insets(15, 15, 15, 15);
             c.fill = GridBagConstraints.BOTH;

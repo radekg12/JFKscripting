@@ -1,6 +1,6 @@
 function mul(x, y) {
-    var result = 1;
-    result = x * y
+    var result;
+    result = x * y;
     return result
 }
 

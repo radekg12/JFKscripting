@@ -1,11 +1,6 @@
 import javax.script.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class PanelZeSkryptami extends JPanel {
     private JTextField arg1TextField, arg2TextField;
@@ -33,21 +28,15 @@ public class PanelZeSkryptami extends JPanel {
         scriptJSTextArea.setLineWrap(true);
         scriptGroovyTextArea.setLineWrap(true);
 
-        addJSFunButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String scriptJSString = scriptJSTextArea.getText();
-                addScript("nashorn", scriptJSString);
-            }
+        addJSFunButton.addActionListener(e -> {
+            String scriptJSString = scriptJSTextArea.getText();
+            addScript("nashorn", scriptJSString);
         });
 
 
-        addGroovyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String scriptGroovyString = scriptGroovyTextArea.getText();
-                addScript("groovy", scriptGroovyString);
-            }
+        addGroovyButton.addActionListener(e -> {
+            String scriptGroovyString = scriptGroovyTextArea.getText();
+            addScript("groovy", scriptGroovyString);
         });
         initGUI();
     }

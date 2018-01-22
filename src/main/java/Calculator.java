@@ -2,8 +2,6 @@ import javax.script.Invocable;
 import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class Calculator extends JPanel {
@@ -36,27 +34,21 @@ public class Calculator extends JPanel {
         crateNumberButton(1, 4, 0);
 
         JButton button = new JButton("CE");
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                oldValue = 0;
-                newValue = 0;
-                screen.setText("");
-            }
+        button.addActionListener(e -> {
+            oldValue = 0;
+            newValue = 0;
+            screen.setText("");
         });
         c.gridx = 3;
         c.gridy = 1;
         add(button, c);
 
         button = new JButton("+/-");
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                newValue *= (-1);
-                screen.setText("" + newValue);
-                operation = "+/-";
+        button.addActionListener(e -> {
+            newValue *= (-1);
+            screen.setText("" + newValue);
+            operation = "+/-";
 
-            }
         });
         c.gridx = 0;
         c.gridy = 4;
@@ -66,25 +58,22 @@ public class Calculator extends JPanel {
         addOperationButton(new JButton(), "+", 3, 3, 1);
 
         button = new JButton("=");
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (options.containsKey(operation)) {
-                    executeMyFunction(operation);
-                    return;
-                } else
-                    switch (operation) {
-                        case "+":
-                            newValue = add(oldValue, newValue);
-                            break;
-                        case "-":
-                            newValue = sub(oldValue, newValue);
-                            break;
-                        default:
-                            break;
-                    }
-                screen.setText("" + newValue);
-            }
+        button.addActionListener(e -> {
+            if (options.containsKey(operation)) {
+                executeMyFunction(operation);
+                return;
+            } else
+                switch (operation) {
+                    case "+":
+                        newValue = add(oldValue, newValue);
+                        break;
+                    case "-":
+                        newValue = sub(oldValue, newValue);
+                        break;
+                    default:
+                        break;
+                }
+            screen.setText("" + newValue);
         });
         c.gridwidth = 2;
         c.gridx = 2;
@@ -98,9 +87,7 @@ public class Calculator extends JPanel {
         Object result = null;
         try {
             result = invocable.invokeFunction(operation.split("[(]")[0], oldValue, newValue);
-        } catch (ScriptException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (ScriptException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         if (result instanceof Double) newValue = (int) ((double) result);
@@ -118,14 +105,10 @@ public class Calculator extends JPanel {
     public void crateNumberButton(int x, int y, int i) {
         JButton button = new JButton("" + i);
         button.setBackground(Color.GRAY.darker());
-        int finalI = i;
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (newValue == 0 && oldValue == 0) newValue = finalI;
-                else newValue = Integer.parseInt(String.valueOf(newValue) + finalI);
-                screen.setText(String.valueOf(newValue));
-            }
+        button.addActionListener(e -> {
+            if (newValue == 0 && oldValue == 0) newValue = i;
+            else newValue = Integer.parseInt(String.valueOf(newValue) + i);
+            screen.setText(String.valueOf(newValue));
         });
         c.gridx = x;
         c.gridy = y;
@@ -134,14 +117,11 @@ public class Calculator extends JPanel {
 
     public void addOperationButton(JButton button, String name, int gridx, int gridy, int gridwidth) {
         button.setText(name);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                oldValue = newValue;
-                newValue = 0;
-                screen.setText("");
-                operation = name;
-            }
+        button.addActionListener(e -> {
+            oldValue = newValue;
+            newValue = 0;
+            screen.setText("");
+            operation = name;
         });
         c.gridx = gridx;
         c.gridy = gridy;
@@ -163,14 +143,11 @@ public class Calculator extends JPanel {
         String finalName = name;
         JButton button = new JButton(name);
         button.setBackground(Color.BLUE.darker());
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                oldValue = newValue;
-                newValue = 0;
-                screen.setText("");
-                operation = finalName;
-            }
+        button.addActionListener(e -> {
+            oldValue = newValue;
+            newValue = 0;
+            screen.setText("");
+            operation = finalName;
         });
         c.gridx = options.size() % 4;
         c.gridy = 5 + options.size() / 4;
