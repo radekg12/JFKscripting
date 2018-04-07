@@ -3,9 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PanelZeSkryptami extends JPanel {
-    private JTextField arg1TextField, arg2TextField;
     private JButton addJSFunButton, addGroovyButton;
-    private JLabel arg1Label, arg2Label, scriptJSLabel, scriptGroovyLabel;
+    private JLabel scriptJSLabel, scriptGroovyLabel;
     private JTextArea scriptJSTextArea, scriptGroovyTextArea;
     private MyFrame frame;
     private GridBagConstraints c;
@@ -13,12 +12,8 @@ public class PanelZeSkryptami extends JPanel {
     public PanelZeSkryptami(MyFrame frame) {
         setLayout(new GridBagLayout());
         this.frame = frame;
-        arg1Label = new JLabel("arg 1: ");
-        arg2Label = new JLabel("arg 2: ");
         scriptJSLabel = new JLabel("JavaScript script: ");
         scriptGroovyLabel = new JLabel("Groovy script: ");
-        arg1TextField = new JTextField();
-        arg2TextField = new JTextField();
         addJSFunButton = new JButton("Add JavaScript");
         addGroovyButton = new JButton("Add Groovy");
         scriptJSTextArea = new JTextArea();
@@ -47,7 +42,7 @@ public class PanelZeSkryptami extends JPanel {
         try {
             engine.eval(script);
         } catch (ScriptException e1) {
-            e1.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Nieprawidłowa treść skryptu!!!\n Spróbuj ponownie");
         }
         String funName = "";
         if (engineName.equals("nashorn"))
@@ -55,16 +50,13 @@ public class PanelZeSkryptami extends JPanel {
         if (engineName.equals("groovy")) funName = script.replace("def ", "").split("[ ]*[(]")[0];
         Invocable invocable = (Invocable) engine;
         frame.getCalculator().addCustomOperationButton(funName, invocable);
+
     }
 
     private void initGUI() {
         c = new GridBagConstraints();
         c.insets = new Insets(10, 10, 10, 10);
         c.fill = GridBagConstraints.BOTH;
-        addToPanel(arg1Label, 0, 0, 1, 1, 1, 1);
-        addToPanel(arg2Label, 2, 0, 1, 1, 1, 1);
-        addToPanel(arg1TextField, 0, 1, 1, 1, 1, 1);
-        addToPanel(arg2TextField, 2, 1, 1, 1, 1, 1);
         addToPanel(scriptJSLabel, 0, 2, 1, 1, 1, 1);
         addToPanel(scriptGroovyLabel, 2, 2, 1, 1, 1, 1);
         addToPanel(scriptJSTextArea, 0, 3, 1, 1, 1, 4);

@@ -5,7 +5,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class Calculator extends JPanel {
-    private Integer oldValue, newValue;
+    private double oldValue, newValue;
     private JTextArea screen;
     private GridBagConstraints c;
     private String operation = "";
@@ -90,8 +90,8 @@ public class Calculator extends JPanel {
         } catch (ScriptException | NoSuchMethodException e) {
             e.printStackTrace();
         }
-        if (result instanceof Double) newValue = (int) ((double) result);
-        if (result instanceof Integer) newValue = (int) result;
+        if (result instanceof Double) newValue = (double) result;
+        else if (result instanceof Integer) newValue = (int) result;
         screen.setText("" + newValue);
     }
 
@@ -107,7 +107,7 @@ public class Calculator extends JPanel {
         button.setBackground(Color.GRAY.darker());
         button.addActionListener(e -> {
             if (newValue == 0 && oldValue == 0) newValue = i;
-            else newValue = Integer.parseInt(String.valueOf(newValue) + i);
+            else newValue = 10 * newValue + i;
             screen.setText(String.valueOf(newValue));
         });
         c.gridx = x;
@@ -157,11 +157,11 @@ public class Calculator extends JPanel {
         options.put(name, invocable);
     }
 
-    public int add(int x, int y) {
+    public double add(double x, double y) {
         return x + y;
     }
 
-    public int sub(int x, int y) {
+    public double sub(double x, double y) {
         return x - y;
     }
 

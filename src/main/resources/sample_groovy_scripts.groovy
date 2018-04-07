@@ -1,4 +1,4 @@
-def pow(int x, int y) {
+def pow(x, y) {
     x**y
 }
 
